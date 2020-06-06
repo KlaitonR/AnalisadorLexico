@@ -8,22 +8,6 @@ public class Linguagem {
 	
 	public Linguagem() {
 			
-//			delimitadores.add("+");
-//			delimitadores.add("-");
-//			delimitadores.add("*");
-//			delimitadores.add("/");
-//			delimitadores.add("[");
-//			delimitadores.add("]");
-//			delimitadores.add("(");
-//			delimitadores.add(")");
-//			delimitadores.add(":");
-//			delimitadores.add("=");
-//			delimitadores.add(">");
-//			delimitadores.add("<");
-//			delimitadores.add(",");
-//			delimitadores.add(";");
-//			delimitadores.add(".");
-			
 			Simbolo s1 = new Simbolo(1,"Program","Palavra reservada");
 			Simbolo s2 = new Simbolo(2,"Label","Palavra reservada");
 			Simbolo s3 = new Simbolo(3,"Const","Palavra reservada");
@@ -75,7 +59,6 @@ public class Linguagem {
 			Simbolo s49 = new Simbolo(49,".","Símbolo Especial");
 			Simbolo s50 = new Simbolo(50,"..","Símbolo Especial");
 			Simbolo s51 = new Simbolo(51,"$","Delimitador");
-			
 			
 			tabelaDeSimbolos.add(s1);
 			tabelaDeSimbolos.add(s2);
