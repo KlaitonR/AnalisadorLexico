@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Linguagem {
 
-	ArrayList<Simbolo> tabelaDeSimbolos = new ArrayList<>();
+	public ArrayList<Simbolo> tabelaDeSimbolos = new ArrayList<>();
 	
 	public Linguagem() {
 			

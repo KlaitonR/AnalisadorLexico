@@ -2,37 +2,37 @@ package Model;
 
 public class AutomatoFinito {
 	
-	Estado q0 = new Estado();
-	Estado q1 = new Estado();
-	Estado q2 = new Estado();
-	Estado q3 = new Estado();
-	Estado q4 = new Estado();
-	Estado q5 = new Estado();
-	Estado q6 = new Estado();
-	Estado q7 = new Estado();
-	Estado q8 = new Estado();
-	Estado q9 = new Estado();
-	Estado q10 = new Estado();
-	Estado q11 = new Estado();
-	Estado q12 = new Estado();
-	Estado q13 = new Estado();
-	Estado q14 = new Estado();
-	Estado q15 = new Estado();
-	Estado q16 = new Estado();
-	Estado q17 = new Estado();
-	Estado q18 = new Estado();
-	Estado q19 = new Estado();
-	Estado q20 = new Estado();
-	Estado q21 = new Estado();
-	Estado q22 = new Estado();
-	Estado q23 = new Estado();
-	Estado q24 = new Estado();
-	Estado q25 = new Estado();
-	Estado q26 = new Estado();
-	Estado q27 = new Estado();
-	Estado q28 = new Estado();
-	Estado q29 = new Estado();
-	Estado q30 = new Estado();
+	public Estado q0 = new Estado();
+	public Estado q1 = new Estado();
+	public Estado q2 = new Estado();
+	public Estado q3 = new Estado();
+	public Estado q4 = new Estado();
+	public Estado q5 = new Estado();
+	public Estado q6 = new Estado();
+	public Estado q7 = new Estado();
+	public Estado q8 = new Estado();
+	public Estado q9 = new Estado();
+	public Estado q10 = new Estado();
+	public Estado q11 = new Estado();
+	public Estado q12 = new Estado();
+	public Estado q13 = new Estado();
+	public Estado q14 = new Estado();
+	public Estado q15 = new Estado();
+	public Estado q16 = new Estado();
+	public Estado q17 = new Estado();
+	public Estado q18 = new Estado();
+	public Estado q19 = new Estado();
+	public Estado q20 = new Estado();
+	public Estado q21 = new Estado();
+	public Estado q22 = new Estado();
+	public Estado q23 = new Estado();
+	public Estado q24 = new Estado();
+	public Estado q25 = new Estado();
+	public Estado q26 = new Estado();
+	public Estado q27 = new Estado();
+	public Estado q28 = new Estado();
+	public Estado q29 = new Estado();
+	public Estado q30 = new Estado();
 	
 	public void estados() {
 	

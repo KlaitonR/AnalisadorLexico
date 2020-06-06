@@ -2,6 +2,7 @@ package view;
 
 import java.util.ArrayList;
 
+import Model.Estado;
 import Model.Linguagem;
 import Model.RegrasProducao;
 import Model.Token;
@@ -12,9 +13,9 @@ public class AnalisadorLexico {
 	ArrayList<Token> tabelaDeTokens = new ArrayList<>();
 	RegrasProducao regras = new RegrasProducao();
 	
-	public void analisador(String caracter) {
+	public Estado analisador(String caracter, RegrasProducao regras, Estado atual) {
 		
-		regras.tabelaTransacao(caracter);
+		return regras.tabelaTransacao(caracter, atual);
 		
 	}
 	

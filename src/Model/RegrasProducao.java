@@ -3,9 +3,9 @@ package Model;
 public class RegrasProducao {
 
 	AutomatoFinito afd = new AutomatoFinito();
-	Estado atual = afd.q0; //Estado inicial
+	Estado atual;
 	
-	public Estado tabelaTransacao(String caracter) {
+	public Estado tabelaTransacao(String caracter, Estado atual) {
 		
 		//REGRAS
 		
