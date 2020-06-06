@@ -1,5 +1,6 @@
 package view;
 import java.util.ArrayList;
+
 import Model.Token;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;

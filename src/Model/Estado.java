@@ -4,7 +4,7 @@ import java.util.ArrayList;
 
 public class Estado {
 	
-	ArrayList<String> CaractersValidos = new ArrayList<>();
-	boolean estadoFinal;
-
+	public ArrayList<String> CaractersValidos = new ArrayList<>();
+	public boolean estadoFinal;
+	
 }
