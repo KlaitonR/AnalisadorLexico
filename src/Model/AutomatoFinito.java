@@ -33,191 +33,105 @@ public class AutomatoFinito {
 	public Estado q28 = new Estado();
 	public Estado q29 = new Estado();
 	public Estado q30 = new Estado();
+	public Estado q31 = new Estado();
 	
 	public void estados() {
 	
-		q0.estadoFinal = false; // Não é um estado final
+		q0.estadoFinal = true; // Não é um estado final
+		q0.grupo = "inicial";
 		
 		q1.estadoFinal = true; // É um estado final
-		q1.CaractersValidos.add("a");
-		q1.CaractersValidos.add("b");
-		q1.CaractersValidos.add("c");
-		q1.CaractersValidos.add("d");
-		q1.CaractersValidos.add("e");
-		q1.CaractersValidos.add("f");
-		q1.CaractersValidos.add("h");
-		q1.CaractersValidos.add("i");
-		q1.CaractersValidos.add("j");
-		q1.CaractersValidos.add("k");
-		q1.CaractersValidos.add("l");
-		q1.CaractersValidos.add("m");
-		q1.CaractersValidos.add("n");
-		q1.CaractersValidos.add("o");
-		q1.CaractersValidos.add("p");
-		q1.CaractersValidos.add("q");
-		q1.CaractersValidos.add("r");
-		q1.CaractersValidos.add("s");
-		q1.CaractersValidos.add("t");
-		q1.CaractersValidos.add("u");
-		q1.CaractersValidos.add("v");
-		q1.CaractersValidos.add("w");
-		q1.CaractersValidos.add("x");
-		q1.CaractersValidos.add("y");
-		q1.CaractersValidos.add("z");
-		q1.CaractersValidos.add("A");
-		q1.CaractersValidos.add("B");
-		q1.CaractersValidos.add("C");
-		q1.CaractersValidos.add("D");
-		q1.CaractersValidos.add("E");
-		q1.CaractersValidos.add("F");
-		q1.CaractersValidos.add("H");
-		q1.CaractersValidos.add("I");
-		q1.CaractersValidos.add("J");
-		q1.CaractersValidos.add("K");
-		q1.CaractersValidos.add("L");
-		q1.CaractersValidos.add("M");
-		q1.CaractersValidos.add("N");
-		q1.CaractersValidos.add("O");
-		q1.CaractersValidos.add("P");
-		q1.CaractersValidos.add("Q");
-		q1.CaractersValidos.add("R");
-		q1.CaractersValidos.add("S");
-		q1.CaractersValidos.add("T");
-		q1.CaractersValidos.add("U");
-		q1.CaractersValidos.add("V");
-		q1.CaractersValidos.add("W");
-		q1.CaractersValidos.add("X");
-		q1.CaractersValidos.add("Y");
-		q1.CaractersValidos.add("Z");
-		q1.CaractersValidos.add("0");
-		q1.CaractersValidos.add("1");
-		q1.CaractersValidos.add("2");
-		q1.CaractersValidos.add("3");
-		q1.CaractersValidos.add("4");
-		q1.CaractersValidos.add("5");
-		q1.CaractersValidos.add("6");
-		q1.CaractersValidos.add("7");
-		q1.CaractersValidos.add("8");
-		q1.CaractersValidos.add("9");
+		q1.grupo = "identificador";
 		
 		q2.estadoFinal = false; // Não é um estado final
-		q2.CaractersValidos.add("(");
+		q2.grupo = "comentario";
 		
 		q3.estadoFinal = false; // Não é um estado final
-		q3.CaractersValidos.add("*");
+		q3.grupo = "comentario";
 		
 		q4.estadoFinal = false; // Não é um estado final
+		q4.grupo = "comentario";
 		
 		q5.estadoFinal = false; // Não é um estado final
-		q5.CaractersValidos.add("*");
+		q5.grupo = "comentario";
 		
 		q6.estadoFinal = true; // É um estado final
-		q6.CaractersValidos.add(")");
+		q6.grupo = "comentario";
 		
 		q7.estadoFinal = true; // É um estado final
-		q7.CaractersValidos.add("0");
-		q7.CaractersValidos.add("1");
-		q7.CaractersValidos.add("2");
-		q7.CaractersValidos.add("3");
-		q7.CaractersValidos.add("4");
-		q7.CaractersValidos.add("5");
-		q7.CaractersValidos.add("6");
-		q7.CaractersValidos.add("7");
-		q7.CaractersValidos.add("8");
-		q7.CaractersValidos.add("9");
+		q7.grupo = "inteiro";
 		
 		q8.estadoFinal = true; // É um estado final
-		q8.CaractersValidos.add(".");
+		q8.grupo = "ponto";
 		
 		q9.estadoFinal = false; // Não é um estado final
+		q9.grupo = "numero decimal";
 		
 		q10.estadoFinal = true; // É um estado final
-		q10.CaractersValidos.add(":");
+		q10.grupo = "dois pontos";
 		
 		q11.estadoFinal = true; // É um estado final
-		q11.CaractersValidos.add("=");
+		q11.grupo = "dois pontos";
 		
 		q12.estadoFinal = true; // É um estado final
-		q12.CaractersValidos.add("<");
+		q12.grupo = "menor";
 		
 		q13.estadoFinal = true; // É um estado final
-		q13.CaractersValidos.add("=");
+		q13.grupo = "menor";
 		
 		q14.estadoFinal = true; // É um estado final
-		q14.CaractersValidos.add(">");
+		q14.grupo = "menor";
 		
 		q15.estadoFinal = true; // É um estado final
-		q15.CaractersValidos.add(">");
+		q15.grupo = "maior";
 		
 		q16.estadoFinal = true; // É um estado final
-		q16.CaractersValidos.add("=");
-		
+		q16.grupo = "maior";
+
 		q17.estadoFinal = true; // É um estado final
-		q17.CaractersValidos.add("+");
+		q17.grupo = "mais";
 		
 		q18.estadoFinal = true; // É um estado final
-		q18.CaractersValidos.add("-");
+		q18.grupo = "menos";
 		
 		q19.estadoFinal = true; // É um estado final
-		q19.CaractersValidos.add("*");
+		q19.grupo = "multiplicacao";
 		
 		q20.estadoFinal = true; // É um estado final
-		q20.CaractersValidos.add("/");
+		q20.grupo = "divisao";
 		
 		q21.estadoFinal = true; // É um estado final
-		q21.CaractersValidos.add(",");
+		q21.grupo = "virgula";
 		
 		q22.estadoFinal = true; // É um estado final
-		q22.CaractersValidos.add(";");
+		q22.grupo = "ponto e virgula";
 		
 		q23.estadoFinal = true; // É um estado final
-		q23.CaractersValidos.add("]");
+		q23.grupo = "colchetes";
 		
 		q24.estadoFinal = true; // É um estado final
-		q24.CaractersValidos.add("[");
+		q24.grupo = "colchetes";
 		
 		q25.estadoFinal = true; // É um estado final
-		q25.CaractersValidos.add("=");
+		q25.grupo = "igual";
 		
 		q26.estadoFinal = true; // É um estado final
-		q26.CaractersValidos.add("$");
+		q26.grupo = "delimitador";
 		
 		q27.estadoFinal = true; // É um estado final
-		q27.CaractersValidos.add("program");
-		q27.CaractersValidos.add("label");
-		q27.CaractersValidos.add("const");
-		q27.CaractersValidos.add("var");
-		q27.CaractersValidos.add("procedure");
-		q27.CaractersValidos.add("begin");
-		q27.CaractersValidos.add("end");
-		q27.CaractersValidos.add("array");
-		q27.CaractersValidos.add("of");
-		q27.CaractersValidos.add("call");
-		q27.CaractersValidos.add("goto");
-		q27.CaractersValidos.add("if");
-		q27.CaractersValidos.add("then");
-		q27.CaractersValidos.add("else");
-		q27.CaractersValidos.add("while");
-		q27.CaractersValidos.add("do");
-		q27.CaractersValidos.add("repeat");
-		q27.CaractersValidos.add("until");
-		q27.CaractersValidos.add("readln");
-		q27.CaractersValidos.add("writeln");
-		q27.CaractersValidos.add("or");
-		q27.CaractersValidos.add("and");
-		q27.CaractersValidos.add("not");
-		q27.CaractersValidos.add("integer");
-		q27.CaractersValidos.add("for");
-		q27.CaractersValidos.add("to");
-		q27.CaractersValidos.add("case");
+		q27.grupo = "palavra reservada";
 	
 		q28.estadoFinal = false;
-		q28.CaractersValidos.add("\"");
+		q28.grupo = "literal";
 		
 		q29.estadoFinal = false;
+		q29.grupo = "literal";
 		
 		q30.estadoFinal = true;
-		q30.CaractersValidos.add("\"");
+		q30.grupo = "literal";
+		
+		q31.estadoFinal = false;
+		q31.grupo = "caracters especiais";
 		
 	}
 
