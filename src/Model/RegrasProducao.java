@@ -5,7 +5,7 @@ public class RegrasProducao {
 	public Estado tabelaTransacao(String caracter, Estado atual, AutomatoFinito afd) {
 		
 		Estado proximoEstado = new Estado();
-		
+
 		//REGRAS
 		
 		//Voltar ao estado q0;
@@ -13,7 +13,7 @@ public class RegrasProducao {
 			proximoEstado = afd.q0;
 				
 		//Para identificador
-		if (!atual.grupo.equals(afd.q7.grupo) &&
+		if ((atual != afd.q7) &&
 			(caracter.equals("a") ||
 					caracter.equals("b") ||
 					caracter.equals("c") ||
@@ -115,7 +115,7 @@ public class RegrasProducao {
 					caracter.equals("9")))
 			proximoEstado = afd.q7;
 				
-				//Ponto
+		//Ponto
 		if(atual.grupo.equals(afd.q7.grupo) && caracter.equals(".")) //Se receber um ponto ".", vai para q8
 			proximoEstado = afd.q8; 
 		
@@ -158,7 +158,6 @@ public class RegrasProducao {
 		//Sinal Menor igual
 		if(atual.grupo.equals(afd.q12.grupo) && caracter.equals("=")) 
 			proximoEstado = afd.q13;
-	
 				
 		//Sinal Diferença
 		if(atual.grupo.equals(afd.q12.grupo) && caracter.equals(">")) 
@@ -213,19 +212,19 @@ public class RegrasProducao {
 			proximoEstado = afd.q26;
 						
 		//Literal
-		if(caracter.equals("\""))  //Abre o literal com as aspas
+		if(caracter.equals("\"")) //Abre o literal com as aspas
 			proximoEstado = afd.q28;
 				
-		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\""))  //Se receber um caracter diferente de uma aspas, vai para q29
+		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\"")) //Se receber um caracter diferente de uma aspas, vai para q29
 			proximoEstado = afd.q29;
 				
-		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\""))  //Se recebe uma aspas, vai para q30
+		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\"")) //Se recebe uma aspas, vai para q30
 			proximoEstado = afd.q30;
 
-		if(atual.grupo.equals(afd.q29.grupo) && !caracter.equals("\""))  // Se está em 29 e recebe caracters diferentes de uma aspas, continua em q29
+		if(atual.grupo.equals(afd.q29.grupo) && !caracter.equals("\"")) // Se está em 29 e recebe caracters diferentes de uma aspas, continua em q29
 			proximoEstado = afd.q29;
 			
-		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\""))  //Se recebe aspas, vai para q30 (Fecha  o literal)
+		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\"")) //Se recebe aspas, vai para q30 (Fecha  o literal)
 			proximoEstado = afd.q30;
 	
 		if(caracter.equals("'") ||
@@ -253,8 +252,10 @@ public class RegrasProducao {
 				caracter.equals("º") ||
 				caracter.equals("°"))
 			proximoEstado = afd.q31;
+		
+		if(atual.grupo.equals(afd.q32.grupo) && caracter.equals("."))
+			proximoEstado = afd.q32;
 			
-				
 		return proximoEstado;
 				 
 	}

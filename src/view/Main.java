@@ -16,7 +16,7 @@ public class Main extends Application {
 			scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
 			primaryStage.setScene(scene);
 			//primaryStage.setMaximized(true);
-			//primaryStage.setTitle("Compilador");
+			primaryStage.setTitle("Analisador léxico");
 			primaryStage.show();
 		} catch(Exception e) {
 			e.printStackTrace();

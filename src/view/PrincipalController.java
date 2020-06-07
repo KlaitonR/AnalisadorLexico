@@ -1,6 +1,5 @@
 package view;
 import java.util.ArrayList;
-
 import Model.AutomatoFinito;
 import Model.Estado;
 import Model.Linguagem;
@@ -33,21 +32,30 @@ public class PrincipalController {
 		
 		Linguagem linguagem = new Linguagem();
 		AutomatoFinito afd = new AutomatoFinito();
-		afd.estados();
 		RegrasProducao regras = new RegrasProducao();
 		Estado atual = new Estado();
 		Estado proximo = new Estado();
 		String tk = "";
 		int linhas = 0;
+		//int nlinhas = 0;
 		boolean aceitacao = true;
 		
 		atual = afd.q0;  //Estado inicial
 		
 		txtCodigo = TACodigo.getText();
 		
+//		Scanner scan = new Scanner(txtCodigo);
+//		
+//		while(scan.next()!= null) {
+//			nlinhas++;
+//		}
+		
 		char[] chars = txtCodigo.toCharArray(); //transforma o código em um vetor de chars
 		
 		for(int i=0; i<chars.length; i++) {
+			
+			if(Character.toString(chars[i]).equals("\\n"))
+				linhas++;
 			
 			proximo = regras.tabelaTransacao(Character.toString(chars[i]), atual, afd); // Analisa o caracter e retorna o estado para qual deve ir
 			
@@ -56,15 +64,17 @@ public class PrincipalController {
 			System.out.println("Próximo estado " + proximo.grupo + "\n");
 			
 			//Verifica se o proximo estado é o mesmo do atual, se for, ainda é o mesmo token
-			if(proximo == atual) {
+			if(proximo.grupo.equals(atual.grupo)) {
 				tk += chars[i];
 			}
 			
 			//Se o proximo estado for diferente do atual, um novo token começou
 			if(!proximo.grupo.equals(atual.grupo)) {
 				
-				if(!Character.toString(chars[i]).equals("") && !Character.toString(chars[i]).equals(" "))//Evitar tokens nulos
+				if(!Character.toString(chars[i]).equals("") && !Character.toString(chars[i]).equals(" ")){ //Evitar tokens nulos
 					tokens.add(tk); //add na lista de tokens 
+					tk = "";
+				}
 				
 				System.out.println("token " + tk + "\n");
 				
@@ -74,6 +84,7 @@ public class PrincipalController {
 				//Verifica se o atual é um estado final, se não for, verifica se o proximo é um estado final e se pertence ao mesmo grupo
 				//Se não pertencer, significa que saiu de um estado não final, para um estado final que não é do grupo de
 				//portanto, não irá aceitar essa sentença
+				//Ou seja, se terminar o token em um estado não final, ERRO LÉXICO
 				if ((atual.estadoFinal == false && 
 						proximo.estadoFinal == true && 
 						!proximo.grupo.equals(atual.grupo)) || 
@@ -94,13 +105,13 @@ public class PrincipalController {
 			for (int j=0; j<linguagem.tabelaDeSimbolos.size(); j++) {
 				if(tokens.get(i).equals(linguagem.tabelaDeSimbolos.get(j).getSimbolo())) {
 					
-					//Cria o Token
+					//Cria o Token para os símbolos em geral
 					Token token = new Token(linguagem.tabelaDeSimbolos.get(j).getCodigo(),   
 											linguagem.tabelaDeSimbolos.get(j).getSimbolo(), 
 											linguagem.tabelaDeSimbolos.get(j).getGrupo());
 					
 					tabelaDeTokens.add(token); //Adiciona no Array de Tokens
-				}else {
+				}else { //Se for um inteiro
 					if(Character.toString(tokens.get(i).charAt(0)).equals("0") ||
 							Character.toString(tokens.get(i).charAt(0)).equals("1") ||
 							Character.toString(tokens.get(i).charAt(0)).equals("2") ||
@@ -115,7 +126,7 @@ public class PrincipalController {
 						Token token = new Token(linguagem.tabelaDeSimbolos.get(25).getCodigo(),tokens.get(i),linguagem.tabelaDeSimbolos.get(25).getGrupo());
 						tabelaDeTokens.add(token); //Adiciona no Array de Tokens
 						
-					}else{
+					}else {//Se for um literal
 						if(Character.toString(tokens.get(i).charAt(0)).equals("\"") && 
 								Character.toString(tokens.get(i).charAt(tokens.get(i).length())).equals("\"")) {
 							
@@ -141,7 +152,6 @@ public class PrincipalController {
 		if(aceitacao == false) {
 			mostraMensagem("ERRO LÉXICO NA LINHA" + linhas, AlertType.ERROR);
 		}
-		
 	}
 	
 	 @FXML
