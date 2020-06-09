@@ -20,6 +20,8 @@ public class PrincipalController {
 	ArrayList<Token> tabelaDeTokens = new ArrayList<>();	
 	ArrayList<String> tokens = new ArrayList<>();
 	ArrayList<Token> tabelaDeTokensAux = new ArrayList<>();
+	ArrayList<String> erroTokens = new ArrayList<>();
+	ArrayList<Number> erroLinha = new ArrayList<>();
 	
 	@FXML TextArea TACodigo;
 	
@@ -39,7 +41,6 @@ public class PrincipalController {
 		Estado atual = new Estado();
 		Estado proximo = new Estado();
 		String tk = "";
-		int linhas = 0;
 		int nlinhas = 0;
 		boolean aceitacao = true;
 		String anterior = "";
@@ -47,6 +48,8 @@ public class PrincipalController {
 		tabelaDeTokens.clear();
 		tabelaDeTokensAux.clear();
 		tokens.clear();
+		erroLinha.clear();
+		erroTokens.clear();
 		
 		atual = afd.q0;  //Estado inicial
 		
@@ -157,6 +160,13 @@ public class PrincipalController {
 				System.out.println("Próximo estado " + proximo.grupo + "\n");
 	
 				aceitacao = verificaAceitacao(atual, proximo);
+				
+				if(aceitacao==false) {
+					aceitacao = true;
+					erroLinha.add(nlinhas);
+					erroTokens.add(Character.toString(chars[i]));
+				}
+				
 				atual = proximo; //o proximo agora vira o atual
 				
 			}else {
@@ -175,9 +185,19 @@ public class PrincipalController {
 		tableViewTokens();
 		iniciaTable();
 		
-		if(aceitacao == false) {
-			mostraMensagem("ERRO LÉXICO NA LINHA " + linhas + "\nTotal de linhas: " + nlinhas, AlertType.ERROR);
-		}
+//		if(erroTokens != null) {
+//			
+//			String erros = "Símbolos que não pertencem a línguagem \n";
+//			
+//			for(int i=0;i<erroTokens.size();i++) {
+//				if(!erroTokens.get(i).equals(" "))
+//					
+//				erros += "Token: " + erroTokens.get(i) + " " + "Linha: " + erroLinha.get(i) + "\n";
+//			}
+//			
+//			mostraMensagem("ERRO LÉXICO \n" + erros , AlertType.ERROR);
+//		}
+		
 	}
 	
 	 private boolean verificaAceitacao(Estado atual, Estado proximo) {
@@ -188,12 +208,13 @@ public class PrincipalController {
 					(atual.estadoFinal == false && 
 					proximo.estadoFinal == false && 
 					!proximo.grupo.equals(atual.grupo)) ||
-					(atual.grupo.equals("caracters especiais")) ||
-					proximo.grupo.equals("caracters especiais")) {
-						 return false;
-					 }else {
-						 return true;
-					 }	
+					(atual.grupo.equals("caracters especiais")) &&
+					!proximo.grupo.equals("caracters especiais")) {
+				return false;
+		 }else {
+				 return true;
+		 }	
+		 
 	 }
 	
 	private void achaSimbolosIguaisLinguagem(Linguagem linguagem) {

@@ -21,19 +21,19 @@ public class RegrasProducao {
 		if(atual.grupo.equals(afd.q33.grupo) && caracter.equals("*")) 
 			proximoEstado = afd.q3;
 			
-		if(atual.grupo.equals(afd.q3.grupo) && !caracter.equals("*")) //Se o atual é q3 e recebo qualquer caracter diferente de * (para fechar o comentario
-			proximoEstado = afd.q4;                          					//vai para q4
+		if(atual.grupo.equals(afd.q3.grupo) && !caracter.equals("*")) 
+			proximoEstado = afd.q4;                          					
 				
-		if(atual.grupo.equals(afd.q4.grupo) && !caracter.equals("*")) //Se o atual é q4 e recebo qualquer caracter diferente de * (para fechar o comentario
-			proximoEstado = afd.q4;                          		 //Continua em q4
+		if(atual.grupo.equals(afd.q4.grupo) && !caracter.equals("*")) 
+			proximoEstado = afd.q4;                          		 
 				
-		if(atual.grupo.equals(afd.q4.grupo) && caracter.equals("*"))  //Inicio de fechamento de comentário
+		if(atual.grupo.equals(afd.q4.grupo) && caracter.equals("*"))  
 			proximoEstado = afd.q5;
 		
-		if(atual.grupo.equals(afd.q5.grupo) && !caracter.equals(")"))  //Se está em q4, e recebe um caracter diferente de ")", volta para q4
-			proximoEstado = afd.q4;                           				 //pois o comentário ainda n foi fechado
+		if(atual.grupo.equals(afd.q5.grupo) && !caracter.equals(")"))  
+			proximoEstado = afd.q4;                           				
 			
-		if(atual.grupo.equals(afd.q5.grupo) && caracter.equals(")")) //Fechamento de comentário
+		if(atual.grupo.equals(afd.q5.grupo) && caracter.equals(")")) 
 			proximoEstado = afd.q6;
 				
 		//Para inteiros
@@ -42,18 +42,17 @@ public class RegrasProducao {
 			proximoEstado = afd.q7;
 				
 		//Ponto
-		if(!atual.grupo.equals(afd.q7.grupo) && caracter.equals(".")) //Se receber um ponto ".", vai para q8
+		if(!atual.grupo.equals(afd.q7.grupo) && caracter.equals(".")) 
 			proximoEstado = afd.q8; 
 		
 				
 		//Números Decimais
-		if(atual.grupo.equals(afd.q7.grupo) && caracter.equals(".")) //Se receber um ponto depois de um número
-			proximoEstado = afd.q9;                           					//vai para q9
+		if(atual.grupo.equals(afd.q7.grupo) && caracter.equals(".")) 
+			proximoEstado = afd.q9;                           					
 	
 				
 		if(atual.grupo.equals(afd.q9.grupo) && caracter.matches("[0-9]*")) {
-			proximoEstado = afd.q9;
-					
+			proximoEstado = afd.q9;	
 		}
 				
 		//Dois Pontos
@@ -125,19 +124,19 @@ public class RegrasProducao {
 			proximoEstado = afd.q26;
 						
 		//Literal
-		if(caracter.equals("\"")) //Abre o literal com as aspas
+		if(caracter.equals("\"")) 
 			proximoEstado = afd.q28;
 				
-		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\"")) //Se receber um caracter diferente de uma aspas, vai para q29
+		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\""))
 			proximoEstado = afd.q29;
 				
-		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\"")) //Se recebe uma aspas, vai para q30
+		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\"")) 
 			proximoEstado = afd.q30;
 
-		if(atual.grupo.equals(afd.q29.grupo) && !caracter.equals("\"")) // Se está em 29 e recebe caracters diferentes de uma aspas, continua em q29
+		if(atual.grupo.equals(afd.q29.grupo) && !caracter.equals("\"")) 
 			proximoEstado = afd.q29;
 			
-		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\"")) //Se recebe aspas, vai para q30 (Fecha  o literal)
+		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\"")) 
 			proximoEstado = afd.q30;
 	
 		if(caracter.equals("'") ||
