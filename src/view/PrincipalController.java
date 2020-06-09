@@ -40,7 +40,7 @@ public class PrincipalController {
 		Estado proximo = new Estado();
 		String tk = "";
 		int linhas = 0;
-		//int nlinhas = 0;
+		int nlinhas = 0;
 		boolean aceitacao = true;
 		String anterior = "";
 		
@@ -53,134 +53,130 @@ public class PrincipalController {
 		txtCodigo = TACodigo.getText();
 		txtCodigo += " " ;
 		
-//		Scanner scan = new Scanner(txtCodigo);
-//		
-//		while(scan.next()!= null) {
-//			nlinhas++;
-//		}
-		
+
 		char[] chars = txtCodigo.toCharArray(); //transforma o código em um vetor de chars
 		
 		for(int i=0; i<chars.length; i++) {
+
+				proximo = regras.tabelaTransacao(Character.toString(chars[i]), atual, afd); 
+				
+				if(proximo.grupo != null) {
 			
-//			if(Character.toString(chars[i]).equals("\\n"))
-//				linhas++;
-			
-			proximo = regras.tabelaTransacao(Character.toString(chars[i]), atual, afd); 
-		
-			if((!atual.grupo.equals("Abre Parenteses") && !proximo.grupo.equals("InicioComentario")) ||
-					!atual.grupo.equals("comentario") ||
-					!proximo.grupo.equals("comentario") ||
-					(!atual.grupo.equals("comentario") && !proximo.grupo.equals("FechaComentario"))){
-			
-				if(proximo.grupo.equals(atual.grupo)) {
+				if((!atual.grupo.equals("Abre Parenteses") && !proximo.grupo.equals("InicioComentario")) ||
+						!atual.grupo.equals("comentario") ||
+						!proximo.grupo.equals("comentario") ||
+						(!atual.grupo.equals("comentario") && !proximo.grupo.equals("FechaComentario"))){
+				
+					if(proximo.grupo.equals(atual.grupo)) {
+						
+						if(!atual.grupo.equals("inicial")) 
+							tk += Character.toString(chars[i]);
+						
+						if(atual.grupo.equals("inicial")) 
+							tk = "";
+						
+					}
 					
-					if(!atual.grupo.equals("inicial")) 
-						tk += Character.toString(chars[i]);
+					if(!proximo.grupo.equals(atual.grupo)) {
+						
+						if(atual.grupo.equals("inicial")) {
+							
+							if(anterior.equals(proximo.grupo)) {
+								tk = Character.toString(chars[i]);
+								anterior = proximo.grupo;
+								System.out.println("Token " + tk + "\n");
+							}
+							
+							if(anterior.equals("")) {
+								tk = Character.toString(chars[i]);
+								System.out.println("Token " + tk + "\n");
+								anterior = proximo.grupo;
+							}
+							
+							if(!anterior.equals(proximo.grupo)) {
+								
+								if(!tk.equals(""))
+									tokens.add(tk);
+									
+								tk = Character.toString(chars[i]);
+								System.out.println("Token " + tk + "\n");
+								
+								if(!tk.equals(""))
+									tokens.add(tk);
+								
+								anterior = "";
+							}
+							
+						}
+						
+						if(!atual.grupo.equals("inicial") && proximo.grupo.equals("inicial")) {
+							tokens.add(tk); 
+							System.out.println("Token " + tk + "\n");
+							tk = "";
+						}
+						
+						if(!atual.grupo.equals("inicial") && !proximo.grupo.equals("inicial")) {
+							
+							if(anterior.equals(proximo.grupo)) {
+								tk = Character.toString(chars[i]);
+								anterior = proximo.grupo;
+								System.out.println("Token " + tk + "\n");
+							}
+						
+							if(anterior.equals("")) {
+								tk = Character.toString(chars[i]);
+								System.out.println("Token " + tk + "\n");
+								anterior = proximo.grupo;
+							}
+							
+							if(!anterior.equals(proximo.grupo)) {
+								
+								if(!tk.equals(""))
+									tokens.add(tk);
+								
+								tk = Character.toString(chars[i]);
+								System.out.println("Token " + tk + "\n");
+								
+								if(!tk.equals(""))
+									tokens.add(tk);
+								
+								anterior = "";
+							}
+						
+						}
+						
+					}
 					
-					if(atual.grupo.equals("inicial")) 
+				}else {
+					
 						tk = "";
-					
 				}
 				
-				if(!proximo.grupo.equals(atual.grupo)) {
-					
-					if(atual.grupo.equals("inicial")) {
-						
-						if(anterior.equals(proximo.grupo)) {
-							tk = Character.toString(chars[i]);
-							anterior = proximo.grupo;
-							System.out.println("Token " + tk + "\n");
-						}
-						
-						if(anterior.equals("")) {
-							tk = Character.toString(chars[i]);
-							System.out.println("Token " + tk + "\n");
-							anterior = proximo.grupo;
-						}
-						
-						if(!anterior.equals(proximo.grupo)) {
-							
-							if(!tk.equals(""))
-								tokens.add(tk);
-								
-							tk = Character.toString(chars[i]);
-							System.out.println("Token " + tk + "\n");
-							
-							if(!tk.equals(""))
-								tokens.add(tk);
-							
-							anterior = "";
-						}
-						
-					}
-					
-					if(!atual.grupo.equals("inicial") && proximo.grupo.equals("inicial")) {
-						tokens.add(tk); 
-						System.out.println("Token " + tk + "\n");
-						tk = "";
-					}
-					
-					if(!atual.grupo.equals("inicial") && !proximo.grupo.equals("inicial")) {
-						
-						if(anterior.equals(proximo.grupo)) {
-							tk = Character.toString(chars[i]);
-							anterior = proximo.grupo;
-							System.out.println("Token " + tk + "\n");
-						}
-					
-						if(anterior.equals("")) {
-							tk = Character.toString(chars[i]);
-							System.out.println("Token " + tk + "\n");
-							anterior = proximo.grupo;
-						}
-						
-						if(!anterior.equals(proximo.grupo)) {
-							
-							if(!tk.equals(""))
-								tokens.add(tk);
-							
-							tk = Character.toString(chars[i]);
-							System.out.println("Token " + tk + "\n");
-							
-							if(!tk.equals(""))
-								tokens.add(tk);
-							
-							anterior = "";
-						}
-					
-					}
-					
-				}
+				System.out.println("Estimulo " + Character.toString(chars[i]));
+				System.out.println("Estado atual " + atual.grupo);
+				System.out.println("Próximo estado " + proximo.grupo + "\n");
+	
+				aceitacao = verificaAceitacao(atual, proximo);
+				atual = proximo; //o proximo agora vira o atual
 				
 			}else {
-				
-					tk = "";
-				
+				proximo = afd.q0;
+				nlinhas++;
 			}
 			
-			System.out.println("Estimulo " + Character.toString(chars[i]));
-			System.out.println("Estado atual " + atual.grupo);
-			System.out.println("Próximo estado " + proximo.grupo + "\n");
-
-			aceitacao = verificaAceitacao(atual, proximo);
-			atual = proximo; //o proximo agora vira o atual
-			
+			for(int j=0;j<tokens.size();j++) {
+				System.out.println("Tabela de tokens " + tokens.get(j) + "\n");
+			}
 		}
 		
 		achaSimbolosIguaisLinguagem(linguagem);
 		encontraTokensVariaives(linguagem);
 		removeTokensRepetidos();
-		
-		for(int i=0;i<tokens.size();i++) {
-			System.out.println("Tabela de tokens " + tokens.get(i) + "\n");
-		}
-		
 		tableViewTokens();
 		iniciaTable();
 		
 		if(aceitacao == false) {
-			mostraMensagem("ERRO LÉXICO NA LINHA" + linhas, AlertType.ERROR);
+			mostraMensagem("ERRO LÉXICO NA LINHA " + linhas + "\nTotal de linhas: " + nlinhas, AlertType.ERROR);
 		}
 	}
 	
