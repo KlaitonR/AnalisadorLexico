@@ -18,8 +18,7 @@ public class RegrasProducao {
 			proximoEstado = afd.q1;
 						
 		//Para Comentário
-				
-		if(atual.grupo.equals(afd.q33.grupo) && caracter.equals("*"))  //Se o q2 é ( , e ler um *, vai para q3
+		if(atual.grupo.equals(afd.q33.grupo) && caracter.equals("*")) 
 			proximoEstado = afd.q3;
 			
 		if(atual.grupo.equals(afd.q3.grupo) && !caracter.equals("*")) //Se o atual é q3 e recebo qualquer caracter diferente de * (para fechar o comentario

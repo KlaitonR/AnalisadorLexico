@@ -51,7 +51,7 @@ public class PrincipalController {
 		atual = afd.q0;  //Estado inicial
 		
 		txtCodigo = TACodigo.getText();
-		txtCodigo += " " ;//pra no final, voltar ao estado inicial
+		txtCodigo += " " ;
 		
 //		Scanner scan = new Scanner(txtCodigo);
 //		
@@ -70,6 +70,7 @@ public class PrincipalController {
 		
 			if((!atual.grupo.equals("Abre Parenteses") && !proximo.grupo.equals("InicioComentario")) ||
 					!atual.grupo.equals("comentario") ||
+					!proximo.grupo.equals("comentario") ||
 					(!atual.grupo.equals("comentario") && !proximo.grupo.equals("FechaComentario"))){
 			
 				if(proximo.grupo.equals(atual.grupo)) {
@@ -152,13 +153,17 @@ public class PrincipalController {
 					
 				}
 				
+			}else {
+				
+					tk = "";
+				
 			}
 			
 			System.out.println("Estimulo " + Character.toString(chars[i]));
 			System.out.println("Estado atual " + atual.grupo);
 			System.out.println("Próximo estado " + proximo.grupo + "\n");
 
-			verificaAceitacao(atual, proximo);
+			aceitacao = verificaAceitacao(atual, proximo);
 			atual = proximo; //o proximo agora vira o atual
 			
 		}
@@ -180,14 +185,19 @@ public class PrincipalController {
 	}
 	
 	 private boolean verificaAceitacao(Estado atual, Estado proximo) {
-		 return (atual.estadoFinal == false && 
+		 
+		 if ((atual.estadoFinal == false && 
 					proximo.estadoFinal == true && 
 					!proximo.grupo.equals(atual.grupo)) || 
 					(atual.estadoFinal == false && 
 					proximo.estadoFinal == false && 
-					!proximo.grupo.equals(atual.grupo)||
-					(atual.grupo.equals("caracters especiais") ||
-					proximo.grupo.equals("caracters especiais")));
+					!proximo.grupo.equals(atual.grupo)) ||
+					(atual.grupo.equals("caracters especiais")) ||
+					proximo.grupo.equals("caracters especiais")) {
+						 return false;
+					 }else {
+						 return true;
+					 }	
 	 }
 	
 	private void achaSimbolosIguaisLinguagem(Linguagem linguagem) {
