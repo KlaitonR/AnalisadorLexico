@@ -43,7 +43,7 @@ public class RegrasProducao {
 			proximoEstado = afd.q7;
 				
 		//Ponto
-		if(atual.grupo.equals(afd.q7.grupo) && caracter.equals(".")) //Se receber um ponto ".", vai para q8
+		if(!atual.grupo.equals(afd.q7.grupo) && caracter.equals(".")) //Se receber um ponto ".", vai para q8
 			proximoEstado = afd.q8; 
 		
 				
@@ -55,8 +55,6 @@ public class RegrasProducao {
 		if(atual.grupo.equals(afd.q9.grupo) && caracter.matches("[0-9]*")) {
 			proximoEstado = afd.q9;
 					
-		}else {
-//			proximoEstado = afd.q0;
 		}
 				
 		//Dois Pontos

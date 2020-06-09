@@ -86,27 +86,32 @@ public class PrincipalController {
 					
 					if(atual.grupo.equals("inicial")) {
 						
-						if(anterior.equals("")) {
-							tk = Character.toString(chars[i]);
-							System.out.println("Token " + tk + "\n");
-							anterior = proximo.grupo;
-						}
-						
 						if(anterior.equals(proximo.grupo)) {
 							tk = Character.toString(chars[i]);
 							anterior = proximo.grupo;
 							System.out.println("Token " + tk + "\n");
 						}
 						
-						if(!anterior.equals(proximo.grupo)) {
-							tokens.add(tk);
+						if(anterior.equals("")) {
 							tk = Character.toString(chars[i]);
 							System.out.println("Token " + tk + "\n");
-							tokens.add(tk);
+							anterior = proximo.grupo;
+						}
+						
+						if(!anterior.equals(proximo.grupo)) {
+							
+							if(!tk.equals(""))
+								tokens.add(tk);
+								
+							tk = Character.toString(chars[i]);
+							System.out.println("Token " + tk + "\n");
+							
+							if(!tk.equals(""))
+								tokens.add(tk);
+							
 							anterior = "";
 						}
 						
-						//System.out.println("Token " + tk + "\n");
 					}
 					
 					if(!atual.grupo.equals("inicial") && proximo.grupo.equals("inicial")) {
@@ -116,6 +121,12 @@ public class PrincipalController {
 					}
 					
 					if(!atual.grupo.equals("inicial") && !proximo.grupo.equals("inicial")) {
+						
+						if(anterior.equals(proximo.grupo)) {
+							tk = Character.toString(chars[i]);
+							anterior = proximo.grupo;
+							System.out.println("Token " + tk + "\n");
+						}
 					
 						if(anterior.equals("")) {
 							tk = Character.toString(chars[i]);
@@ -123,17 +134,17 @@ public class PrincipalController {
 							anterior = proximo.grupo;
 						}
 						
-						if(anterior.equals(proximo.grupo)) {
-							tk = Character.toString(chars[i]);
-							anterior = proximo.grupo;
-							System.out.println("Token " + tk + "\n");
-						}
-						
 						if(!anterior.equals(proximo.grupo)) {
-							tokens.add(tk);
+							
+							if(!tk.equals(""))
+								tokens.add(tk);
+							
 							tk = Character.toString(chars[i]);
 							System.out.println("Token " + tk + "\n");
-							tokens.add(tk);
+							
+							if(!tk.equals(""))
+								tokens.add(tk);
+							
 							anterior = "";
 						}
 					
