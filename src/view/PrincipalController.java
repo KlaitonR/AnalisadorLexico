@@ -1,5 +1,7 @@
 package view;
 import java.util.ArrayList;
+import java.util.Objects;
+
 import Model.AutomatoFinito;
 import Model.Estado;
 import Model.Linguagem;
@@ -17,6 +19,7 @@ public class PrincipalController {
 
 	ArrayList<Token> tabelaDeTokens = new ArrayList<>();	
 	ArrayList<String> tokens = new ArrayList<>();
+	ArrayList<Token> tabelaDeTokensAux = new ArrayList<>();
 	
 	@FXML TextArea TACodigo;
 	
@@ -39,10 +42,16 @@ public class PrincipalController {
 		int linhas = 0;
 		//int nlinhas = 0;
 		boolean aceitacao = true;
+		String anterior = "";
+		
+		tabelaDeTokens.clear();
+		tabelaDeTokensAux.clear();
+		tokens.clear();
 		
 		atual = afd.q0;  //Estado inicial
 		
 		txtCodigo = TACodigo.getText();
+		txtCodigo += " " ;//pra no final, voltar ao estado inicial
 		
 //		Scanner scan = new Scanner(txtCodigo);
 //		
@@ -54,93 +63,81 @@ public class PrincipalController {
 		
 		for(int i=0; i<chars.length; i++) {
 			
-			if(Character.toString(chars[i]).equals("\\n"))
-				linhas++;
+//			if(Character.toString(chars[i]).equals("\\n"))
+//				linhas++;
 			
-			proximo = regras.tabelaTransacao(Character.toString(chars[i]), atual, afd); // Analisa o caracter e retorna o estado para qual deve ir
+			proximo = regras.tabelaTransacao(Character.toString(chars[i]), atual, afd); 
+		
+			if((!atual.grupo.equals("Abre Parenteses") && !proximo.grupo.equals("InicioComentario")) ||
+					!atual.grupo.equals("comentario") ||
+					(!atual.grupo.equals("comentario") && !proximo.grupo.equals("FechaComentario"))){
+			
+				if(proximo.grupo.equals(atual.grupo)) {
+					
+					if(!atual.grupo.equals("inicial")) 
+						tk += Character.toString(chars[i]);
+					
+					if(atual.grupo.equals("inicial")) 
+						tk = "";
+					
+				}
+				
+				if(!proximo.grupo.equals(atual.grupo)) {
+					
+					if(atual.grupo.equals("inicial")) {
+						
+						tk += Character.toString(chars[i]);
+						tokens.add(tk); 
+						
+						System.out.println("Token " + tk + "\n");
+					}
+					
+					if(!atual.grupo.equals("inicial") && proximo.grupo.equals("inicial")) {
+						tokens.add(tk); 
+						System.out.println("Token " + tk + "\n");
+						tk = "";
+					}
+					
+					if(!atual.grupo.equals("inicial") && !proximo.grupo.equals("inicial")) {
+					
+						if(anterior.equals("")) {
+							tk = Character.toString(chars[i]);
+							System.out.println("Token " + tk + "\n");
+							anterior = proximo.grupo;
+						}
+						
+						if(anterior.equals(proximo.grupo)) {
+							tk = Character.toString(chars[i]);
+							anterior = proximo.grupo;
+							System.out.println("Token " + tk + "\n");
+						}
+						
+						if(!anterior.equals(proximo.grupo)) {
+							tokens.add(tk);
+							tk = Character.toString(chars[i]);
+							System.out.println("Token " + tk + "\n");
+							tokens.add(tk);
+							anterior = "";
+						}
+					
+					}
+					
+				}
+				
+			}
 			
 			System.out.println("Estimulo " + Character.toString(chars[i]));
 			System.out.println("Estado atual " + atual.grupo);
 			System.out.println("Próximo estado " + proximo.grupo + "\n");
-			
-			//Verifica se o proximo estado é o mesmo do atual, se for, ainda é o mesmo token
-			if(proximo.grupo.equals(atual.grupo)) {
-				tk += chars[i];
-			}
-			
-			//Se o proximo estado for diferente do atual, um novo token começou
-			if(!proximo.grupo.equals(atual.grupo)) {
-				
-				if(!Character.toString(chars[i]).equals("") && !Character.toString(chars[i]).equals(" ")){ //Evitar tokens nulos
-					tokens.add(tk); //add na lista de tokens 
-					tk = "";
-				}
-				
-				System.out.println("token " + tk + "\n");
-				
-				tk = ""; //zera o token para nova analise
-				tk += Character.toString(chars[i]); //Inicia o novo token
-				
-				//Verifica se o atual é um estado final, se não for, verifica se o proximo é um estado final e se pertence ao mesmo grupo
-				//Se não pertencer, significa que saiu de um estado não final, para um estado final que não é do grupo de
-				//portanto, não irá aceitar essa sentença
-				//Ou seja, se terminar o token em um estado não final, ERRO LÉXICO
-				if ((atual.estadoFinal == false && 
-						proximo.estadoFinal == true && 
-						!proximo.grupo.equals(atual.grupo)) || 
-						(atual.estadoFinal == false && 
-						proximo.estadoFinal == false && 
-						!proximo.grupo.equals(atual.grupo))) {
-					aceitacao = false;
-				}
-				
-			}
 
+			verificaAceitacao(atual, proximo);
 			atual = proximo; //o proximo agora vira o atual
 			
 		}
 		
-		//Cria os tokens e separa por grupos
-		for(int i=0; i<tokens.size();i++) {
-			for (int j=0; j<linguagem.tabelaDeSimbolos.size(); j++) {
-				if(tokens.get(i).equals(linguagem.tabelaDeSimbolos.get(j).getSimbolo())) {
-					
-					//Cria o Token para os símbolos em geral
-					Token token = new Token(linguagem.tabelaDeSimbolos.get(j).getCodigo(),   
-											linguagem.tabelaDeSimbolos.get(j).getSimbolo(), 
-											linguagem.tabelaDeSimbolos.get(j).getGrupo());
-					
-					tabelaDeTokens.add(token); //Adiciona no Array de Tokens
-				}else { //Se for um inteiro
-					if(Character.toString(tokens.get(i).charAt(0)).equals("0") ||
-							Character.toString(tokens.get(i).charAt(0)).equals("1") ||
-							Character.toString(tokens.get(i).charAt(0)).equals("2") ||
-							Character.toString(tokens.get(i).charAt(0)).equals("3") ||
-							Character.toString(tokens.get(i).charAt(0)).equals("4") ||
-							Character.toString(tokens.get(i).charAt(0)).equals("5") ||
-							Character.toString(tokens.get(i).charAt(0)).equals("6") ||
-							Character.toString(tokens.get(i).charAt(0)).equals("7") ||
-							Character.toString(tokens.get(i).charAt(0)).equals("8") ||
-							Character.toString(tokens.get(i).charAt(0)).equals("9")) {
-						
-						Token token = new Token(linguagem.tabelaDeSimbolos.get(25).getCodigo(),tokens.get(i),linguagem.tabelaDeSimbolos.get(25).getGrupo());
-						tabelaDeTokens.add(token); //Adiciona no Array de Tokens
-						
-					}else {//Se for um literal
-						if(Character.toString(tokens.get(i).charAt(0)).equals("\"") && 
-								Character.toString(tokens.get(i).charAt(tokens.get(i).length())).equals("\"")) {
-							
-							Token token = new Token(linguagem.tabelaDeSimbolos.get(47).getCodigo(),tokens.get(i),linguagem.tabelaDeSimbolos.get(47).getGrupo());
-							tabelaDeTokens.add(token); //Adiciona no Array de Tokens
-							
-						}else {
-							Token token = new Token(linguagem.tabelaDeSimbolos.get(24).getCodigo(),tokens.get(i),linguagem.tabelaDeSimbolos.get(24).getGrupo());
-							tabelaDeTokens.add(token); //Adiciona no Array de Tokens
-						}
-					}
-				}
-			}
-		}
+		achaSimbolosIguaisLinguagem(linguagem);
+		encontraTokensVariaives(linguagem);
+		removeTokensRepetidos();
 		
 		for(int i=0;i<tokens.size();i++) {
 			System.out.println("Tabela de tokens " + tokens.get(i) + "\n");
@@ -154,10 +151,67 @@ public class PrincipalController {
 		}
 	}
 	
+	 private boolean verificaAceitacao(Estado atual, Estado proximo) {
+		 return (atual.estadoFinal == false && 
+					proximo.estadoFinal == true && 
+					!proximo.grupo.equals(atual.grupo)) || 
+					(atual.estadoFinal == false && 
+					proximo.estadoFinal == false && 
+					!proximo.grupo.equals(atual.grupo)||
+					(atual.grupo.equals("caracters especiais") ||
+					proximo.grupo.equals("caracters especiais")));
+	 }
+	
+	private void achaSimbolosIguaisLinguagem(Linguagem linguagem) {
+		for (int i = 0; i < tokens.size(); i++) {
+			for (int j = 0; j < linguagem.tabelaDeSimbolos.size(); j++) {
+				if (tokens.get(i).equals(linguagem.tabelaDeSimbolos.get(j).getSimbolo())) {
+					Token token = new Token(linguagem.tabelaDeSimbolos.get(j).getCodigo(),
+							linguagem.tabelaDeSimbolos.get(j).getSimbolo(),
+							linguagem.tabelaDeSimbolos.get(j).getGrupo());
+					tabelaDeTokensAux.add(token);
+				}
+			}
+		}
+ }
+	
+	 private void encontraTokensVariaives(Linguagem linguagem) {
+			String varAntiga = "";
+			for (int i = 0; i < tokens.size(); i++) {
+					if (Objects.nonNull(tokens) && Character.toString(tokens.get(i).charAt(0)).matches("[0-9]*") && !tokens.get(i).equals(varAntiga)) {
+						Token token = new Token(linguagem.tabelaDeSimbolos.get(25).getCodigo(), tokens.get(i),
+								linguagem.tabelaDeSimbolos.get(25).getGrupo());
+						tabelaDeTokens.add(token);
+						varAntiga = tokens.get(i);
+					} else if (Character.toString(tokens.get(i).charAt(0)).equals("\"")
+							&& Character.toString(tokens.get(i).charAt(tokens.get(i).length())).equals("\"") && !tokens.get(i).equals(varAntiga)) {
+						Token token = new Token(linguagem.tabelaDeSimbolos.get(47).getCodigo(), tokens.get(i),
+								linguagem.tabelaDeSimbolos.get(47).getGrupo());
+						tabelaDeTokens.add(token);
+						varAntiga = tokens.get(i);
+					} else if (!tokens.get(i).equals(varAntiga)) {
+						Token token = new Token(linguagem.tabelaDeSimbolos.get(24).getCodigo(), tokens.get(i),
+								linguagem.tabelaDeSimbolos.get(24).getGrupo());
+						tabelaDeTokens.add(token);
+						varAntiga = tokens.get(i);
+					}
+			}
+	 }
+	 
+	 private void removeTokensRepetidos() {
+			for (int i = 0; i < tabelaDeTokensAux.size(); i++) {
+				for (int j = 0; j < tabelaDeTokens.size(); j++) {
+					if (tabelaDeTokensAux.get(i).getToken().equals(tabelaDeTokens.get(j).getToken())) {
+						tabelaDeTokens.remove(j);
+						tabelaDeTokens.add(tabelaDeTokensAux.get(i));
+					}
+				}
+			}
+	 }
+	
 	 @FXML
 	 private void tableViewTokens(){
 		 
-		tabelaDeTokens.clear();
 		tabTokens.setItems(FXCollections.observableArrayList(tabelaDeTokens));
 				
 	 }
@@ -173,7 +227,7 @@ public class PrincipalController {
 			
 			Alert a = new Alert (tipo);
 		
-			a.setHeaderText(null); // modificar mensagem
+			a.setHeaderText(null);
 			a.setContentText(msg);
 			a.show();
 		}

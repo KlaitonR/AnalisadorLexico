@@ -35,6 +35,8 @@ public class AutomatoFinito {
 	public Estado q30 = new Estado();
 	public Estado q31 = new Estado();
 	public Estado q32 = new Estado();
+	public Estado q33 = new Estado();
+	public Estado q34 = new Estado();
 	
 	public AutomatoFinito() {
 	
@@ -48,13 +50,13 @@ public class AutomatoFinito {
 		this.q2.grupo = "comentario";
 		
 		this.q3.estadoFinal = false; // Não é um estado final
-		this.q3.grupo = "comentario";
+		this.q3.grupo = "InicioComentario";
 		
 		this.q4.estadoFinal = false; // Não é um estado final
 		this.q4.grupo = "comentario";
 		
 		this.q5.estadoFinal = false; // Não é um estado final
-		this.q5.grupo = "comentario";
+		this.q5.grupo = "FimComentario";
 		
 		this.q6.estadoFinal = true; // É um estado final
 		this.q6.grupo = "comentario";
@@ -136,6 +138,12 @@ public class AutomatoFinito {
 		
 		this.q32.estadoFinal = true;
 		this.q32.grupo = "ponto";
+		
+		this.q33.estadoFinal = true;
+		this.q33.grupo = "Abre Parenteses";
+		
+		this.q34.estadoFinal = true;
+		this.q34.grupo = "Fecha Parenteses";
 		
 	}
 

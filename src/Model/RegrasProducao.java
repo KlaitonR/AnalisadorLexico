@@ -14,75 +14,12 @@ public class RegrasProducao {
 				
 		//Para identificador
 		if ((atual != afd.q7) &&
-			(caracter.equals("a") ||
-					caracter.equals("b") ||
-					caracter.equals("c") ||
-					caracter.equals("d") ||
-					caracter.equals("e") ||
-					caracter.equals("f") ||
-					caracter.equals("g") ||
-					caracter.equals("h") ||
-					caracter.equals("i") ||
-					caracter.equals("j") ||
-					caracter.equals("k") ||
-					caracter.equals("l") ||
-					caracter.equals("m") ||
-					caracter.equals("n") ||
-					caracter.equals("o") ||
-					caracter.equals("p") ||
-					caracter.equals("q") ||
-					caracter.equals("r") ||
-					caracter.equals("s") ||
-					caracter.equals("t") ||
-					caracter.equals("u") ||
-					caracter.equals("v") ||
-					caracter.equals("w") ||
-					caracter.equals("x") ||
-					caracter.equals("y") ||
-					caracter.equals("z") ||
-					caracter.equals("A") ||
-					caracter.equals("B") ||
-					caracter.equals("C") ||
-					caracter.equals("D") ||
-					caracter.equals("E") ||
-					caracter.equals("F") ||
-					caracter.equals("G") ||
-					caracter.equals("H") ||
-					caracter.equals("I") ||
-					caracter.equals("J") ||
-					caracter.equals("K") ||
-					caracter.equals("L") ||
-					caracter.equals("M") ||
-					caracter.equals("N") ||
-					caracter.equals("O") ||
-					caracter.equals("P") ||
-					caracter.equals("Q") ||
-					caracter.equals("R") ||
-					caracter.equals("S") ||
-					caracter.equals("T") ||
-					caracter.equals("U") ||
-					caracter.equals("V") ||
-					caracter.equals("W") ||
-					caracter.equals("X") ||
-					caracter.equals("Y") ||
-					caracter.equals("Z") ||
-					caracter.equals("0") ||
-					caracter.equals("1") ||
-					caracter.equals("2") ||
-					caracter.equals("3") ||
-					caracter.equals("4") ||
-					caracter.equals("5") ||
-					caracter.equals("6") ||
-					caracter.equals("7") ||
-					caracter.equals("8") ||
-					caracter.equals("9")))
+			(caracter.matches("[0-9]*") || caracter.matches("[a-z]*") || caracter.matches("[A-Z]*")))
 			proximoEstado = afd.q1;
 						
 		//Para Comentário
-		if(caracter.equals("(")) //Idependente de onde estiver, se abrir os parenteses vai para q2 (abrindo comentário)
-			proximoEstado = afd.q2;
 				
-		if(atual.grupo.equals(afd.q2.grupo) && caracter.equals("*"))  //Se o q2 é ( , e ler um *, vai para q3
+		if(atual.grupo.equals(afd.q33.grupo) && caracter.equals("*"))  //Se o q2 é ( , e ler um *, vai para q3
 			proximoEstado = afd.q3;
 			
 		if(atual.grupo.equals(afd.q3.grupo) && !caracter.equals("*")) //Se o atual é q3 e recebo qualquer caracter diferente de * (para fechar o comentario
@@ -102,17 +39,7 @@ public class RegrasProducao {
 				
 		//Para inteiros
 				
-		if(!atual.grupo.equals(afd.q1.grupo) &&
-			(caracter.equals("0") ||
-					caracter.equals("1") ||
-					caracter.equals("2") ||
-					caracter.equals("3") ||
-					caracter.equals("4") ||
-					caracter.equals("5") ||
-					caracter.equals("6") ||
-					caracter.equals("7") ||
-					caracter.equals("8") ||
-					caracter.equals("9")))
+		if(!atual.grupo.equals(afd.q1.grupo) && caracter.matches("[0-9]*"))
 			proximoEstado = afd.q7;
 				
 		//Ponto
@@ -125,22 +52,11 @@ public class RegrasProducao {
 			proximoEstado = afd.q9;                           					//vai para q9
 	
 				
-		if(atual.grupo.equals(afd.q9.grupo) &&
-			(caracter.equals("0") ||
-					caracter.equals("1") ||
-					caracter.equals("2") ||
-					caracter.equals("3") ||
-					caracter.equals("4") ||
-					caracter.equals("5") ||
-					caracter.equals("6") ||
-					caracter.equals("7") ||
-					caracter.equals("8") ||
-					caracter.equals("9"))) {
-					
+		if(atual.grupo.equals(afd.q9.grupo) && caracter.matches("[0-9]*")) {
 			proximoEstado = afd.q9;
 					
 		}else {
-			proximoEstado = afd.q0;
+//			proximoEstado = afd.q0;
 		}
 				
 		//Dois Pontos
@@ -180,7 +96,7 @@ public class RegrasProducao {
 			proximoEstado = afd.q18;
 				
 		//Sinal Multiplicação
-		if(!atual.grupo.equals(afd.q2.grupo) && !atual.grupo.equals(afd.q4.grupo) && caracter.equals("*"))
+		if(!atual.grupo.equals(afd.q2.grupo) && !atual.grupo.equals(afd.q4.grupo) && !atual.grupo.equals(afd.q33.grupo) && caracter.equals("*"))
 			proximoEstado = afd.q19;
 	
 		//Sinal Divisão
@@ -204,7 +120,7 @@ public class RegrasProducao {
 			proximoEstado = afd.q24;
 					
 		//Sinal de igual
-		if(!atual.grupo.equals(afd.q12.grupo) && !atual.grupo.equals(afd.q15.grupo) && caracter.equals("="))
+		if(!atual.grupo.equals(afd.q12.grupo) && !atual.grupo.equals(afd.q15.grupo) && !atual.grupo.equals(afd.q10.grupo) && caracter.equals("="))
 			proximoEstado = afd.q25;
 	
 		//Delimitador
@@ -255,6 +171,12 @@ public class RegrasProducao {
 		
 		if(atual.grupo.equals(afd.q32.grupo) && caracter.equals("."))
 			proximoEstado = afd.q32;
+		
+		if(caracter.equals("("))
+			proximoEstado = afd.q33;
+		
+		if(caracter.equals(")"))
+			proximoEstado = afd.q34;
 			
 		return proximoEstado;
 				 
