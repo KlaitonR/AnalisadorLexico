@@ -37,91 +37,93 @@ public class AutomatoFinito {
 	public Estado q32 = new Estado();
 	public Estado q33 = new Estado();
 	public Estado q34 = new Estado();
+	public Estado q35 = new Estado();
+	public Estado q36 = new Estado();
 	
 	public AutomatoFinito() {
 	
-		this.q0.estadoFinal = true; // Não é um estado final
+		this.q0.estadoFinal = true;
 		this.q0.grupo = "inicial";
 		
-		this.q1.estadoFinal = true; // É um estado final
+		this.q1.estadoFinal = true;
 		this.q1.grupo = "identificador";
 		
-		this.q2.estadoFinal = false; // Não é um estado final
+		this.q2.estadoFinal = false;
 		this.q2.grupo = "comentario";
 		
-		this.q3.estadoFinal = false; // Não é um estado final
+		this.q3.estadoFinal = false;
 		this.q3.grupo = "InicioComentario";
 		
-		this.q4.estadoFinal = false; // Não é um estado final
+		this.q4.estadoFinal = false;
 		this.q4.grupo = "comentario";
 		
-		this.q5.estadoFinal = false; // Não é um estado final
+		this.q5.estadoFinal = false; 
 		this.q5.grupo = "FimComentario";
 		
-		this.q6.estadoFinal = true; // É um estado final
+		this.q6.estadoFinal = true;
 		this.q6.grupo = "comentario";
 		
-		this.q7.estadoFinal = true; // É um estado final
+		this.q7.estadoFinal = true;
 		this.q7.grupo = "inteiro";
 		
-		this.q8.estadoFinal = true; // É um estado final
+		this.q8.estadoFinal = true;
 		this.q8.grupo = "ponto";
 		
-		this.q9.estadoFinal = false; // Não é um estado final
+		this.q9.estadoFinal = false;
 		this.q9.grupo = "numero decimal";
 		
-		this.q10.estadoFinal = true; // É um estado final
+		this.q10.estadoFinal = true;
 		this.q10.grupo = "dois pontos";
 		
-		this.q11.estadoFinal = true; // É um estado final
+		this.q11.estadoFinal = true;
 		this.q11.grupo = "dois pontos";
 		
-		this.q12.estadoFinal = true; // É um estado final
+		this.q12.estadoFinal = true;
 		this.q12.grupo = "menor";
 		
-		this.q13.estadoFinal = true; // É um estado final
+		this.q13.estadoFinal = true;
 		this.q13.grupo = "menor";
 		
-		this.q14.estadoFinal = true; // É um estado final
+		this.q14.estadoFinal = true; 
 		this.q14.grupo = "menor";
 		
-		this.q15.estadoFinal = true; // É um estado final
+		this.q15.estadoFinal = true; 
 		this.q15.grupo = "maior";
 		
-		this.q16.estadoFinal = true; // É um estado final
+		this.q16.estadoFinal = true;
 		this.q16.grupo = "maior";
 
-		this.q17.estadoFinal = true; // É um estado final
+		this.q17.estadoFinal = true; 
 		this.q17.grupo = "mais";
 		
-		this.q18.estadoFinal = true; // É um estado final
+		this.q18.estadoFinal = true; 
 		this.q18.grupo = "menos";
 		
-		this.q19.estadoFinal = true; // É um estado final
+		this.q19.estadoFinal = true; 
 		this.q19.grupo = "multiplicacao";
 		
-		this.q20.estadoFinal = true; // É um estado final
+		this.q20.estadoFinal = true; 
 		this.q20.grupo = "divisao";
 		
-		this.q21.estadoFinal = true; // É um estado final
+		this.q21.estadoFinal = true; 
 		this.q21.grupo = "virgula";
 		
-		this.q22.estadoFinal = true; // É um estado final
+		this.q22.estadoFinal = true;
 		this.q22.grupo = "ponto e virgula";
 		
-		this.q23.estadoFinal = true; // É um estado final
+		this.q23.estadoFinal = true; 
 		this.q23.grupo = "colchetes";
 		
-		this.q24.estadoFinal = true; // É um estado final
+		this.q24.estadoFinal = true; 
 		this.q24.grupo = "colchetes";
 		
-		this.q25.estadoFinal = true; // É um estado final
+		this.q25.estadoFinal = true; 
 		this.q25.grupo = "igual";
 		
-		this.q26.estadoFinal = true; // É um estado final
+		this.q26.estadoFinal = true; 
 		this.q26.grupo = "delimitador";
 		
-		this.q27.estadoFinal = true; // É um estado final
+		this.q27.estadoFinal = true; 
 		this.q27.grupo = "palavra reservada";
 	
 		this.q28.estadoFinal = false;
@@ -144,6 +146,12 @@ public class AutomatoFinito {
 		
 		this.q34.estadoFinal = true;
 		this.q34.grupo = "Fecha Parenteses";
+		
+		this.q35.estadoFinal = false;
+		this.q35.grupo = "inteiro";
+		
+		this.q36.estadoFinal = true;
+		this.q36.grupo = "Igual";
 		
 	}
 

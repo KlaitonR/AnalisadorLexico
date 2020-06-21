@@ -2,7 +2,7 @@ package Model;
 
 public class RegrasProducao {
 	
-	public Estado tabelaTransacao(String caracter, Estado atual, AutomatoFinito afd) {
+	public Estado tabelaTransacao(String caracter, Estado atual, AutomatoFinito afd){
 		
 		Estado proximoEstado = new Estado();
 
@@ -13,7 +13,7 @@ public class RegrasProducao {
 			proximoEstado = afd.q0;
 				
 		//Para identificador
-		if ((atual != afd.q7) &&
+		if (((atual != afd.q7) || (atual != afd.q35 || (atual != afd.q3))) &&
 			(caracter.matches("[0-9]*") || caracter.matches("[a-z]*") || caracter.matches("[A-Z]*")))
 			proximoEstado = afd.q1;
 						
@@ -22,7 +22,7 @@ public class RegrasProducao {
 			proximoEstado = afd.q3;
 			
 		if(atual.grupo.equals(afd.q3.grupo) && !caracter.equals("*")) 
-			proximoEstado = afd.q4;                          					
+			proximoEstado = afd.q4;                    					
 				
 		if(atual.grupo.equals(afd.q4.grupo) && !caracter.equals("*")) 
 			proximoEstado = afd.q4;                          		 
@@ -35,7 +35,7 @@ public class RegrasProducao {
 			
 		if(atual.grupo.equals(afd.q5.grupo) && caracter.equals(")")) 
 			proximoEstado = afd.q6;
-				
+		
 		//Para inteiros
 				
 		if(!atual.grupo.equals(afd.q1.grupo) && caracter.matches("[0-9]*"))
@@ -45,11 +45,12 @@ public class RegrasProducao {
 		if(!atual.grupo.equals(afd.q7.grupo) && caracter.equals(".")) 
 			proximoEstado = afd.q8; 
 		
-				
 		//Números Decimais
 		if(atual.grupo.equals(afd.q7.grupo) && caracter.equals(".")) 
 			proximoEstado = afd.q9;                           					
 	
+		if(atual.grupo.equals(afd.q7.grupo) && (caracter.matches("[a-z]*") || caracter.matches("[A-Z]*")))
+			proximoEstado = afd.q35;
 				
 		if(atual.grupo.equals(afd.q9.grupo) && caracter.matches("[0-9]*")) {
 			proximoEstado = afd.q9;	
@@ -76,7 +77,7 @@ public class RegrasProducao {
 			proximoEstado = afd.q14;
 		
 		//Sinal de Maior
-		if(caracter.equals(">")) 
+		if(!atual.grupo.equals(afd.q12.grupo) && caracter.equals(">")) 
 			proximoEstado = afd.q15;
 				
 		//Sinal Maior igual
@@ -118,7 +119,13 @@ public class RegrasProducao {
 		//Sinal de igual
 		if(!atual.grupo.equals(afd.q12.grupo) && !atual.grupo.equals(afd.q15.grupo) && !atual.grupo.equals(afd.q10.grupo) && caracter.equals("="))
 			proximoEstado = afd.q25;
-	
+		
+		if(atual.grupo.equals(afd.q25.grupo) && caracter.equals("="))
+			proximoEstado = afd.q36;
+		
+		if(atual.grupo.equals(afd.q36.grupo) && caracter.equals("="))
+			proximoEstado = afd.q25;
+		
 		//Delimitador
 		if(caracter.equals("$"))
 			proximoEstado = afd.q26;
@@ -127,7 +134,7 @@ public class RegrasProducao {
 		if(caracter.equals("\"")) 
 			proximoEstado = afd.q28;
 				
-		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\""))
+		if(atual.grupo.equals(afd.q28.grupo) && !caracter.equals("\""))
 			proximoEstado = afd.q29;
 				
 		if(atual.grupo.equals(afd.q28.grupo) && caracter.equals("\"")) 
@@ -173,7 +180,10 @@ public class RegrasProducao {
 		
 		if(caracter.equals(")"))
 			proximoEstado = afd.q34;
-			
+		
+		if(caracter.equals(null))
+			proximoEstado = afd.q0;
+		
 		return proximoEstado;
 				 
 	}

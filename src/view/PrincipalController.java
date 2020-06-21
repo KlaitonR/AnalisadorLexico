@@ -104,9 +104,6 @@ public class PrincipalController {
 								tk = Character.toString(chars[i]);
 								System.out.println("Token " + tk + "\n");
 								
-								if(!tk.equals(""))
-									tokens.add(tk);
-								
 								anterior = "";
 							}
 							
@@ -127,6 +124,7 @@ public class PrincipalController {
 							}
 						
 							if(anterior.equals("")) {
+								tokens.add(tk);
 								tk = Character.toString(chars[i]);
 								System.out.println("Token " + tk + "\n");
 								anterior = proximo.grupo;
@@ -139,9 +137,6 @@ public class PrincipalController {
 								
 								tk = Character.toString(chars[i]);
 								System.out.println("Token " + tk + "\n");
-								
-								if(!tk.equals(""))
-									tokens.add(tk);
 								
 								anterior = "";
 							}
@@ -161,16 +156,22 @@ public class PrincipalController {
 	
 				aceitacao = verificaAceitacao(atual, proximo);
 				
-				if(aceitacao==false) {
+				if(aceitacao) {
 					aceitacao = true;
 					erroLinha.add(nlinhas);
-					erroTokens.add(Character.toString(chars[i]));
+					erroTokens.add(Character.toString(chars[i-1]));
 				}
 				
-				atual = proximo; //o proximo agora vira o atual
+				atual = proximo;
 				
 			}else {
+				atual = afd.q0;
 				proximo = afd.q0;
+				
+				if(!tk.equals(""))
+					tokens.add(tk);
+				
+				tk = "";
 				nlinhas++;
 			}
 			
@@ -185,37 +186,30 @@ public class PrincipalController {
 		tableViewTokens();
 		iniciaTable();
 		
-//		if(erroTokens != null) {
-//			
-//			String erros = "Símbolos que não pertencem a línguagem \n";
-//			
-//			for(int i=0;i<erroTokens.size();i++) {
-//				if(!erroTokens.get(i).equals(" "))
-//					
-//				erros += "Token: " + erroTokens.get(i) + " " + "Linha: " + erroLinha.get(i) + "\n";
-//			}
-//			
-//			mostraMensagem("ERRO LÉXICO \n" + erros , AlertType.ERROR);
-//		}
+		if(!erroTokens.isEmpty()) {
+			
+			String erros = "Símbolos que não pertencem a línguagem \n";
+			
+			for(int i=0;i<erroTokens.size();i++) {
+				if(!erroTokens.get(i).equals(" "))
+					erros += "Token: " + erroTokens.get(i) + " " + "Linha: " + erroLinha.get(i) + "\n";
+			}
+			
+			mostraMensagem("ERRO LÉXICO \n" + erros , AlertType.ERROR);
+		}
 		
 	}
 	
 	 private boolean verificaAceitacao(Estado atual, Estado proximo) {
-		 
-		 if ((atual.estadoFinal == false && 
+		 return ((atual.estadoFinal == false && 
 					proximo.estadoFinal == true && 
 					!proximo.grupo.equals(atual.grupo)) || 
 					(atual.estadoFinal == false && 
 					proximo.estadoFinal == false && 
 					!proximo.grupo.equals(atual.grupo)) ||
 					(atual.grupo.equals("caracters especiais")) &&
-					!proximo.grupo.equals("caracters especiais")) {
-				return false;
-		 }else {
-				 return true;
+					!proximo.grupo.equals("caracters especiais"));
 		 }	
-		 
-	 }
 	
 	private void achaSimbolosIguaisLinguagem(Linguagem linguagem) {
 		for (int i = 0; i < tokens.size(); i++) {
@@ -265,7 +259,7 @@ public class PrincipalController {
 	 }
 	
 	 @FXML
-	 private void tableViewTokens(){
+	 private void tableViewTokens(){ 
 		 
 		tabTokens.setItems(FXCollections.observableArrayList(tabelaDeTokens));
 				
