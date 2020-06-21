@@ -52,13 +52,13 @@ public class AutomatoFinito {
 		this.q2.grupo = "comentario";
 		
 		this.q3.estadoFinal = false;
-		this.q3.grupo = "InicioComentario";
+		this.q3.grupo = "comentario";
 		
 		this.q4.estadoFinal = false;
 		this.q4.grupo = "comentario";
 		
 		this.q5.estadoFinal = false; 
-		this.q5.grupo = "FimComentario";
+		this.q5.grupo = "comentario";
 		
 		this.q6.estadoFinal = true;
 		this.q6.grupo = "comentario";

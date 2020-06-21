@@ -19,7 +19,10 @@ public class RegrasProducao {
 						
 		//Para Comentário
 		if(atual.grupo.equals(afd.q33.grupo) && caracter.equals("*")) 
-			proximoEstado = afd.q3;
+			proximoEstado = afd.q2;
+		
+		if(atual.grupo.equals(afd.q2.grupo) && !caracter.equals("*")) 
+			proximoEstado = afd.q4;        
 			
 		if(atual.grupo.equals(afd.q3.grupo) && !caracter.equals("*")) 
 			proximoEstado = afd.q4;                    					

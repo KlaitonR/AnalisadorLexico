@@ -65,10 +65,9 @@ public class PrincipalController {
 				
 				if(proximo.grupo != null) {
 			
-				if((!atual.grupo.equals("Abre Parenteses") && !proximo.grupo.equals("InicioComentario")) ||
-						!atual.grupo.equals("comentario") ||
-						!proximo.grupo.equals("comentario") ||
-						(!atual.grupo.equals("comentario") && !proximo.grupo.equals("FechaComentario"))){
+				if((!atual.grupo.equals("Abre Parenteses") && !proximo.grupo.equals("comentario")) ||
+						(!atual.grupo.equals("comentario") && !proximo.grupo.equals("comentario")) ||
+						(!atual.grupo.equals("comentario") && !proximo.grupo.equals("Fecha Parenteses"))){
 				
 					if(proximo.grupo.equals(atual.grupo)) {
 						
@@ -147,7 +146,7 @@ public class PrincipalController {
 					
 				}else {
 					
-						tk = "";
+					tk = "";
 				}
 				
 				System.out.println("Estimulo " + Character.toString(chars[i]));
@@ -175,9 +174,10 @@ public class PrincipalController {
 				nlinhas++;
 			}
 			
-			for(int j=0;j<tokens.size();j++) {
-				System.out.println("Tabela de tokens " + tokens.get(j) + "\n");
-			}
+		}
+		
+		for(int j=0;j<tokens.size();j++) {
+			System.out.println("Tabela de tokens " + tokens.get(j) + "\n");
 		}
 		
 		achaSimbolosIguaisLinguagem(linguagem);
@@ -225,24 +225,24 @@ public class PrincipalController {
  }
 	
 	 private void encontraTokensVariaives(Linguagem linguagem) {
-			String varAntiga = "";
+
 			for (int i = 0; i < tokens.size(); i++) {
-					if (Objects.nonNull(tokens) && Character.toString(tokens.get(i).charAt(0)).matches("[0-9]*") && !tokens.get(i).equals(varAntiga)) {
+					if (Objects.nonNull(tokens) && Character.toString(tokens.get(i).charAt(0)).matches("[0-9]*")) {
 						Token token = new Token(linguagem.tabelaDeSimbolos.get(25).getCodigo(), tokens.get(i),
 								linguagem.tabelaDeSimbolos.get(25).getGrupo());
 						tabelaDeTokens.add(token);
-						varAntiga = tokens.get(i);
+						
 					} else if (Character.toString(tokens.get(i).charAt(0)).equals("\"")
-							&& Character.toString(tokens.get(i).charAt(tokens.get(i).length())).equals("\"") && !tokens.get(i).equals(varAntiga)) {
+							&& Character.toString(tokens.get(i).charAt(tokens.get(i).length())).equals("\"")) {
 						Token token = new Token(linguagem.tabelaDeSimbolos.get(47).getCodigo(), tokens.get(i),
 								linguagem.tabelaDeSimbolos.get(47).getGrupo());
 						tabelaDeTokens.add(token);
-						varAntiga = tokens.get(i);
-					} else if (!tokens.get(i).equals(varAntiga)) {
+						
+					} else {
 						Token token = new Token(linguagem.tabelaDeSimbolos.get(24).getCodigo(), tokens.get(i),
 								linguagem.tabelaDeSimbolos.get(24).getGrupo());
 						tabelaDeTokens.add(token);
-						varAntiga = tokens.get(i);
+						
 					}
 			}
 	 }
